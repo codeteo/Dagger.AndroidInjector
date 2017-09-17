@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Dagger Module with network dependencies.
  */
 
-@Module
+@Module()
 public class NetworkModule {
 
     private static final int CONNECTION_TIMEOUT = 15;
