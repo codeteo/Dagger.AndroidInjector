@@ -4,10 +4,10 @@ import dagger.Subcomponent;
 import dagger.android.AndroidInjector;
 import example.injector.com.androidinjectorexample.dagger.ActivityScope;
 import example.injector.com.androidinjectorexample.features.main.MainActivity;
-import example.injector.com.androidinjectorexample.features.main.dagger.modules.MainViewModelModule;
+import example.injector.com.androidinjectorexample.features.main.dagger.modules.MainActivityModule;
 
 @ActivityScope
-@Subcomponent(modules = MainViewModelModule.class)
+@Subcomponent(modules = MainActivityModule.class)
 public interface MainActivitySubComponent extends AndroidInjector<MainActivity>{
 
     @Subcomponent.Builder
