@@ -1,26 +1,22 @@
 package example.injector.com.androidinjectorexample.features.main.dagger.modules;
 
-import android.arch.lifecycle.ViewModelProvider;
+import android.app.Activity;
 
+import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
-import example.injector.com.androidinjectorexample.ViewModelProviderFactory;
-import example.injector.com.androidinjectorexample.dagger.ActivityScope;
-import example.injector.com.androidinjectorexample.features.main.MainViewModel;
+import dagger.android.ActivityKey;
+import dagger.android.AndroidInjector;
+import dagger.multibindings.IntoMap;
+import example.injector.com.androidinjectorexample.features.main.MainActivity;
+import example.injector.com.androidinjectorexample.features.main.dagger.components.MainActivitySubComponent;
 
-@Module
-public class MainActivityModule {
+@Module(subcomponents = MainActivitySubComponent.class)
+public abstract class MainActivityModule {
 
-    @Provides
-    @ActivityScope
-    MainViewModel providesMainViewModel() {
-        return new MainViewModel();
-    }
-
-    @Provides
-    @ActivityScope
-    ViewModelProvider.Factory providesMainViewModelProvider(MainViewModel mainViewModel) {
-        return new ViewModelProviderFactory<>(mainViewModel);
-    }
+    @Binds
+    @IntoMap
+    @ActivityKey(MainActivity.class)
+    abstract AndroidInjector.Factory<? extends Activity>
+        bindMainActivityInjectorFactory(MainActivitySubComponent.Builder builder);
 
 }
