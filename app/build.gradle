@@ -31,6 +31,7 @@ project.ext {
     stethoVersion = '1.5.0'
     mockitoVersion = '1.10.19'
     mockWebServerVersion = '3.6.0'
+    archComponentsVersion = '1.0.0-alpha9'
 }
 
 dependencies {
@@ -54,6 +55,15 @@ dependencies {
     // Dagger Android
     annotationProcessor "com.google.dagger:dagger-android-processor:$project.daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$project.daggerVersion"
+
+    // Architecture Components
+    implementation "android.arch.lifecycle:runtime:$project.archComponentsVersion"
+    implementation "android.arch.lifecycle:extensions:$project.archComponentsVersion"
+    annotationProcessor "android.arch.lifecycle:compiler:$project.archComponentsVersion"
+
+    // Room
+    implementation "android.arch.persistence.room:runtime:$project.archComponentsVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$project.archComponentsVersion"
 
     // ButterKnife
     implementation "com.jakewharton:butterknife:$project.butterKnifeVersion"
