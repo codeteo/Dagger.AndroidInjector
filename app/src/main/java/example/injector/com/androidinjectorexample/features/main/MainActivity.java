@@ -12,6 +12,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjection;
 import example.injector.com.androidinjectorexample.R;
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     ViewModelProvider.Factory viewModelProvider;
 
     private MainViewModel viewModel;
+
+    private CompositeSubscription subscriptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +36,17 @@ public class MainActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this, viewModelProvider)
                 .get(MainViewModel.class);
 
-        viewModel.doSomething()
-                .subscribe(user -> {
-                    tvName.setText(user.getName());
-                });
+        Subscription subscription = viewModel.doSomething()
+                .subscribe(user -> tvName.setText(user.getName()));
+
+        subscriptions.add(subscription);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (subscriptions != null && subscriptions.hasSubscriptions()) {
+            subscriptions.unsubscribe();
+        }
+    }
 }
