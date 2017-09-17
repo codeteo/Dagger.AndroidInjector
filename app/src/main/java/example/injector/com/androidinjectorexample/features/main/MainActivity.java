@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 import example.injector.com.androidinjectorexample.R;
+import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,7 +27,10 @@ public class MainActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this, viewModelProvider)
                 .get(MainViewModel.class);
 
-        viewModel.doSomething();
+        viewModel.doSomething()
+                .subscribe(user -> {
+                    Timber.i("user is %s", user.getName());
+                });
     }
 
 }

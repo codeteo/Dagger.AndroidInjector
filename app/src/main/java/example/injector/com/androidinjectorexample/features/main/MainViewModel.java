@@ -5,7 +5,9 @@ import android.arch.lifecycle.ViewModel;
 import javax.inject.Inject;
 
 import example.injector.com.androidinjectorexample.data.api.GithubService;
-import timber.log.Timber;
+import example.injector.com.androidinjectorexample.data.entities.User;
+import example.injector.com.androidinjectorexample.utils.schedulers.BaseSchedulerProvider;
+import rx.Observable;
 
 /**
  * ViewModel for {@link MainActivity}
@@ -14,14 +16,17 @@ import timber.log.Timber;
 public class MainViewModel extends ViewModel {
 
     private GithubService service;
+    private BaseSchedulerProvider schedulerProvider;
 
     @Inject
-    public MainViewModel(GithubService service) {
+    public MainViewModel(GithubService service, BaseSchedulerProvider schedulerProvider) {
         this.service = service;
-        Timber.i("inject MainViewModel");
+        this.schedulerProvider = schedulerProvider;
     }
 
-    void doSomething() {
-        Timber.i("Do something");
+    Observable<User> doSomething() {
+        return service.getUser("jakeWharton")
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.androidMainThread());
     }
 }
