@@ -6,11 +6,13 @@ import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 import example.injector.com.androidinjectorexample.MyApplication;
+import example.injector.com.androidinjectorexample.dagger.builder.ActivityBuilderModule;
 import example.injector.com.androidinjectorexample.dagger.modules.ApplicationModule;
 
 @Singleton
 @Component( modules = {
         AndroidInjectionModule.class,
+        ActivityBuilderModule.class,
         ApplicationModule.class })
 public interface ApplicationComponent {
 
